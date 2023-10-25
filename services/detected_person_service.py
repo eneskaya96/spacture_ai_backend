@@ -5,8 +5,8 @@ from datetime import datetime
 
 class DetectedPersonService:
     detected_count = 100000
-    def __init__(self, ):
-        print("DetectedPersonService")
+
+    def __init__(self):
         self.detected_persons = []
         self.names = ['Alice', 'Bob', 'Charlie', 'Diana', 'Ethan']
 

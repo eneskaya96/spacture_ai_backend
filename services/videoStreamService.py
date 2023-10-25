@@ -4,7 +4,6 @@ from time import sleep
 import cv2
 
 from services.detected_images import DetectedImagesService
-from services.notificationService import NotificationService
 
 
 class VideoStreamService:
@@ -52,7 +51,7 @@ class VideoStreamService:
             elapsed_time += delay
 
         cap.release()
-        sleep(3)
+        sleep(1)
         VideoStreamService.active_streams.remove(session_id)
         self.start_stream(session_id)
 

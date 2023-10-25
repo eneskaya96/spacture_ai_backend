@@ -71,7 +71,6 @@ NOTIFICATION END POINTS
 """
 @app.route('/api/save-token', methods=['POST'])
 def save_token():
-    print("SAVE TOKEN")
     data = request.get_json()
     if not data or 'token' not in data:
         return jsonify({'error': 'Token is missing'}), 400

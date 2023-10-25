@@ -1,5 +1,3 @@
-import os
-
 from services.detected_person_service import DetectedPersonService
 from services.notificationService import NotificationService
 
@@ -28,7 +26,3 @@ class DetectedImagesService:
         if detected_person["thread"]:
             notification_service = NotificationService()
             notification_service.send_notification()
-
-
-
-
