@@ -1,0 +1,10 @@
+flask
+opencv-python
+flask_cors
+Flask-SocketIO
+opencv-python
+requests
+Flask-APScheduler
+gevent
+gevent-websocket
+urllib3
