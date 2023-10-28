@@ -9,8 +9,10 @@ class DetectedPersonService:
     def __init__(self):
         self.detected_persons = []
         self.names = ['Alice', 'Bob', 'Charlie', 'Diana', 'Ethan']
+        for i in range(0, 7):
+            self.create_detected_person(i + 1, False)
 
-    def create_detected_person(self, url):
+    def create_detected_person(self, url, thread):
         """
         for detected_person in self.detected_persons:
             if url == detected_person["url"]:
@@ -19,7 +21,6 @@ class DetectedPersonService:
 
         now = datetime.now()
         name = random.choice(self.names)
-        thread = random.choice([ False, True])
 
         detected_person = {
             "id": "ID_" + str(DetectedPersonService.detected_count),

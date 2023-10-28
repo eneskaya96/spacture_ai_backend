@@ -26,6 +26,9 @@ class VideoStreamService:
         elapsed_time = 0
         notification_sent = False
         notification_2_sent = False
+        notification_3_sent = False
+        notification_4_sent = False
+        notification_5_sent = False
 
         while True:
             ret, frame = cap.read()
@@ -33,13 +36,23 @@ class VideoStreamService:
                 break
 
             #send notification only from only 1 camera
-            if 10 <= elapsed_time <= 12 and not notification_sent and session_id == "unique_id_for_client_1" :
+            if 5 <= elapsed_time <= 6 and not notification_sent and session_id == "unique_id_for_client_1" :
                 notification_sent = True
-                self.detected_images_service.send_detected_images()
+                self.detected_images_service.send_detected_images(False)
 
-            if 20 <= elapsed_time <= 22 and not notification_2_sent and session_id == "unique_id_for_client_1":
+            if 6 <= elapsed_time <= 7 and not notification_2_sent and session_id == "unique_id_for_client_1":
                 notification_2_sent = True
-                self.detected_images_service.send_detected_images()
+                self.detected_images_service.send_detected_images(False)
+
+            if 10 <= elapsed_time <= 11 and not notification_3_sent and session_id == "unique_id_for_client_1":
+                notification_3_sent = True
+                self.detected_images_service.send_detected_images(False)
+            if 11 < elapsed_time <= 12 and not notification_4_sent and session_id == "unique_id_for_client_1":
+                notification_4_sent = True
+                self.detected_images_service.send_detected_images(True)
+            if 11 <= elapsed_time <= 12 and not notification_5_sent and session_id == "unique_id_for_client_1":
+                notification_5_sent = True
+                self.detected_images_service.send_detected_images(False)
 
             _, buffer = cv2.imencode('.jpg', frame)
             jpg_as_text = base64.b64encode(buffer).decode('utf-8')

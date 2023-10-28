@@ -11,7 +11,7 @@ from services.detected_images import DetectedImagesService
 from services.notificationService import NotificationService
 from services.videoStreamService import VideoStreamService
 
-ip = "192.168.1.57"
+ip = "10.100.140.26"
 
 app = Flask(__name__)
 scheduler = APScheduler()
@@ -25,26 +25,26 @@ VIDEO STREAM
 @socketio.on('start_stream_1')
 def start_stream(data):
     session_id = data.get('session_id')
-    video_stream_service = VideoStreamService(socketio, './assets/sample_video_2.mp4', "video_frame_1")
+    video_stream_service = VideoStreamService(socketio, './assets/sample_video_1.mp4', "video_frame_1")
     video_stream_service.start_stream(session_id)
 
 
 @socketio.on('start_stream_2')
 def start_stream(data):
     session_id = data.get('session_id')
-    video_stream_service = VideoStreamService(socketio, './assets/sample_video_3.mp4', "video_frame_2")
+    video_stream_service = VideoStreamService(socketio, './assets/sample_video_2.mp4', "video_frame_2")
     video_stream_service.start_stream(session_id)
 
 @socketio.on('start_stream_3')
 def start_stream(data):
     session_id = data.get('session_id')
-    video_stream_service = VideoStreamService(socketio, './assets/sample_video_old.mp4', "video_frame_3")
+    video_stream_service = VideoStreamService(socketio, './assets/sample_video_3.mp4', "video_frame_3")
     video_stream_service.start_stream(session_id)
 
 @socketio.on('start_stream_4')
 def start_stream(data):
     session_id = data.get('session_id')
-    video_stream_service = VideoStreamService(socketio, './assets/sample_video_2.mp4', "video_frame_4")
+    video_stream_service = VideoStreamService(socketio, './assets/sample_video_4.mp4', "video_frame_4")
     video_stream_service.start_stream(session_id)
 
 
