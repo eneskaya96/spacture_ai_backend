@@ -50,9 +50,7 @@ class VideoStreamService:
             if 11 < elapsed_time <= 12 and not notification_4_sent and session_id == "unique_id_for_client_1":
                 notification_4_sent = True
                 self.detected_images_service.send_detected_images(True)
-            if 11 <= elapsed_time <= 12 and not notification_5_sent and session_id == "unique_id_for_client_1":
-                notification_5_sent = True
-                self.detected_images_service.send_detected_images(False)
+
 
             _, buffer = cv2.imencode('.jpg', frame)
             jpg_as_text = base64.b64encode(buffer).decode('utf-8')
@@ -63,10 +61,14 @@ class VideoStreamService:
             self.socketio.sleep(delay)
             elapsed_time += delay
 
+        if session_id == "unique_id_for_client_1":
+            self.detected_images_service.send_detected_images(False)
         cap.release()
         sleep(1)
+        """
         VideoStreamService.active_streams.remove(session_id)
         self.start_stream(session_id)
+        """
 
     def is_stream_active(cls, session_id):
         return session_id in cls.active_streams
