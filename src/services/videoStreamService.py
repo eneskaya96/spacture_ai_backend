@@ -3,7 +3,7 @@ from time import sleep
 
 import cv2
 
-from services.detected_images import DetectedImagesService
+from src.services.detected_images import DetectedImagesService
 
 
 class VideoStreamService:

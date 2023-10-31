@@ -1,4 +1,0 @@
-ipconfig getifaddr en0
-
-
-chrome://flags/#block-insecure-private-network-requests

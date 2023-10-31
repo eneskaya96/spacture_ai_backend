@@ -5,7 +5,7 @@ import cv2
 detector = dlib.get_frontal_face_detector()
 
 # Video yakalama
-video = cv2.VideoCapture('../assets/sample_video_1.mp4')
+video = cv2.VideoCapture('../src/assets/sample_video_1.mp4')
 
 while True:
     ret, frame = video.read()

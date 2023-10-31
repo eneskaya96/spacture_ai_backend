@@ -1,0 +1,11 @@
+
+def initialize_routes(app, socketio):
+
+    from src.api.camera_stream_routes import initialize_camera_stream_routes
+    initialize_camera_stream_routes(socketio=socketio)
+
+    from src.api.notification_routes import initialize_notification_routes
+    initialize_notification_routes(app=app)
+
+    from src.api.rigth_panel_routes import initialize_right_panel_routes
+    initialize_right_panel_routes(app=app, socketio=socketio)

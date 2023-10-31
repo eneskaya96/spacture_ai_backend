@@ -1,12 +1,12 @@
-from services.detected_person_service import DetectedPersonService
-from services.notificationService import NotificationService
+from src.services.detected_person_service import DetectedPersonService
+from src.services.notificationService import NotificationService
 
 
 class DetectedImagesService:
     detected_person_service = DetectedPersonService()
 
     def __init__(self, socketio):
-        self.image_dir = "./assets"
+        self.image_dir = "./src/assets"
         self.detection_count = 8
         self.socketio = socketio
 

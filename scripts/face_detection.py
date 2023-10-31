@@ -4,7 +4,7 @@ import os
 face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
 
 # Videoyu yakala
-video = cv2.VideoCapture('../assets/sample_video_1.mp4')  # Buraya videonuzun yolunu yazın.
+video = cv2.VideoCapture('../src/assets/sample_video_1.mp4')  # Buraya videonuzun yolunu yazın.
 
 # Kaydedilen yüzler için bir klasör oluşturun.
 faces_folder = "detected_faces"
