@@ -4,6 +4,9 @@ from flask_cors import CORS
 from flask_socketio import SocketIO
 
 import gevent.monkey
+
+from src.configs.config_manager import ConfigManager
+
 gevent.monkey.patch_all(ssl=False)
 
 ip = "192.168.1.57"
@@ -23,13 +26,14 @@ if __name__ == '__main__':
     scheduler.start()
     """
 
+    config = ConfigManager.init_config()
+    app.config.from_object(config)
+
     from src.api import initialize_routes
     initialize_routes(app, socketio)
 
-    """
     from src.infrastructure.db.db_manager import DBManager
     DBManager.start_db(app)
-    """
 
     from gevent.pywsgi import WSGIServer
     from geventwebsocket.handler import WebSocketHandler

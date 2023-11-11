@@ -8,3 +8,14 @@ Flask-APScheduler
 gevent
 gevent-websocket
 urllib3
+flask_migrate
+Flask-SQLAlchemy
+
+# DB
+SQLAlchemy
+mysqlclient
+alembic
+SQLAlchemy-Utils
+
+pydantic
+pydantic-settings
