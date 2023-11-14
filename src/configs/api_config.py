@@ -18,10 +18,10 @@ class GlobalConfig(BaseConfig):
 
     """Secrets"""
 
-    MYSQL_HOST: Optional[str]
-    MYSQL_PASSWORD: Optional[str]
-    MYSQL_USER: Optional[str]
-    MYSQL_DB_NAME: Optional[str]
+    POSTGRES_HOST: Optional[str]
+    POSTGRES_PASSWORD: Optional[str]
+    POSTGRES_USER: Optional[str]
+    POSTGRES_DB_NAME: Optional[str]
 
     SALT_SECRET_KEY: str = Field('\x1bEy6\xcc\x96\x16\xb3E!\xec\xd6\xb3M\xcf\x90')
 
@@ -39,8 +39,11 @@ class GlobalConfig(BaseConfig):
         extra = Extra.allow
 
     def create_db_uri(self) -> str:
-        self.SQLALCHEMY_DATABASE_URI \
-            = f'mysql+mysqldb://{self.MYSQL_USER}:{self.MYSQL_PASSWORD}@{self.MYSQL_HOST}/{self.MYSQL_DB_NAME}?charset=utf8mb4'
+        self.SQLALCHEMY_DATABASE_URI = (
+            f'postgresql+psycopg2://{self.POSTGRES_USER}:'
+            f'{self.POSTGRES_PASSWORD}@{self.POSTGRES_HOST}/'
+            f'{self.POSTGRES_DB_NAME}'
+        )
         return self.SQLALCHEMY_DATABASE_URI
 
 

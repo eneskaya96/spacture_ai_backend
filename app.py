@@ -9,10 +9,10 @@ from src.configs.config_manager import ConfigManager
 
 gevent.monkey.patch_all(ssl=False)
 
-ip = "192.168.1.57"
+ip = "192.168.1.34"
 
 
-if __name__ == '__main__':
+def create_app():
     app = Flask(__name__)
     scheduler = APScheduler()
     CORS(app, resources={r"*": {"origins": "*"}})
@@ -35,6 +35,11 @@ if __name__ == '__main__':
     from src.infrastructure.db.db_manager import DBManager
     DBManager.start_db(app)
 
+    return app
+
+
+if __name__ == '__main__':
+    app = create_app()
     from gevent.pywsgi import WSGIServer
     from geventwebsocket.handler import WebSocketHandler
 

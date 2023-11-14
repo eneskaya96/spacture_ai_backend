@@ -1,11 +1,9 @@
 from __future__ import annotations
 
-from dataclasses import dataclass
-from src.infrastructure.entities.base_entity import BaseStrEntity
+from src.domain.seed_work.model.base_entity_model import BaseStrEntityModel
 
 
-@dataclass
-class Company(BaseStrEntity):
+class Company(BaseStrEntityModel):
     name: str
 
     class Config:
@@ -15,4 +13,3 @@ class Company(BaseStrEntity):
     def create_company(cls,
                        name: str) -> Company:
         return cls(name=name)
-

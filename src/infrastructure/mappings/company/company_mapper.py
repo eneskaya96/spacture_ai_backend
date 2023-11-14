@@ -7,17 +7,16 @@ from src.infrastructure.entities.company.company import Company
 from src.infrastructure.mappings import BaseMapper
 
 
-
 class CompanyMapper(BaseMapper):
     def __init__(self, metadata: MetaData):
         super().__init__(metadata, Company)
 
     def perform_mapping(self, mappings: Dict[type, Table]) -> Table:
         company_mapping = Table(
-            'fortune', self._metadata,
-            Column('id', Integer, primary_key=True),
+            'company', self._metadata,
+            Column('id', String(250), primary_key=True),
             Column('created_date', DateTime, nullable=False),
-            Column('modified_date', DateTime),
+            Column('modified_date', DateTime, nullable=True),
             Column('name', String(250), nullable=False)
         )
 

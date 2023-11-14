@@ -12,7 +12,7 @@ class MapManager:
 
     @classmethod
     def map_entities(cls) -> MetaData:
-        cls._metadata = MetaData()
+        cls._metadata = MetaData(schema='face_recognition')
 
         CompanyMapper(cls._metadata).map(cls._mappings)
 
