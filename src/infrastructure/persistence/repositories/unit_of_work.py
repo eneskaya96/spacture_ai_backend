@@ -7,7 +7,11 @@ from sqlalchemy.orm import Session
 from src.domain.seed_work.repository.unit_of_work import UnitOfWork as BaseDomainUnitOfWork
 from src.infrastructure.db.db_manager import DBManager
 from src.domain.company.repositories import company_repository
+from src.domain.face_detection.repositories import face_detection_repository
+from src.domain.watchlist.repositories import watchlist_repository
 from src.infrastructure.persistence.repositories.company_management.company_repository import CompanyRepository
+from src.infrastructure.persistence.repositories.face_detection.face_detection_repository import FaceDetectionRepository
+from src.infrastructure.persistence.repositories.watchlist.watchlist_repository import WatchlistRepository
 from src.infrastructure.persistence.repositories.base_repository import TRepo
 
 
@@ -42,6 +46,14 @@ class UnitOfWork(BaseDomainUnitOfWork):
     @property
     def companies(self) -> company_repository.CompanyRepository:
         return self.__get_repository(CompanyRepository)(self.session, not self._depth)
+
+    @property
+    def face_detection(self) -> face_detection_repository.FaceDetectionRepository:
+        return self.__get_repository(FaceDetectionRepository)(self.session, not self._depth)
+
+    @property
+    def watchlist(self) -> watchlist_repository.WatchlistRepository:
+        return self.__get_repository(WatchlistRepository)(self.session, not self._depth)
 
     # endregion
 

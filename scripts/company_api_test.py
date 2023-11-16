@@ -17,6 +17,7 @@ def create_company():
 
     print("Status:", response.status_code)
     print("Response:", response.json())
+    return response.json()
 
 def get_company_by_id(company_id):
     url = f"http://192.168.1.34:5000/api/company/{company_id}"
@@ -25,5 +26,6 @@ def get_company_by_id(company_id):
     print("Status:", response.status_code)
     print("Response:", response.json())
 
-create_company()
-get_company_by_id("d4261a87-9367-459a-be4c-f18d82346b35")
+company = create_company()
+print("company_id", company['data']['id'] )
+get_company_by_id(company['data']['id'])

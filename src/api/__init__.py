@@ -13,3 +13,6 @@ def initialize_routes(app, socketio):
 
     from src.api.company_routes import initialize_company_routes
     initialize_company_routes(app=app)
+
+    from src.api.face_detection_routes import initialize_face_detection_routes
+    initialize_face_detection_routes(app=app, socketio=socketio)

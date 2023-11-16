@@ -5,6 +5,8 @@ import logging
 from typing import Any
 
 from src.domain.company.repositories import company_repository
+from src.domain.face_detection.repositories import face_detection_repository
+from src.domain.watchlist.repositories import watchlist_repository
 
 
 class UnitOfWork(abc.ABC):
@@ -42,4 +44,13 @@ class UnitOfWork(abc.ABC):
     def companies(self) -> company_repository.CompanyRepository:
         pass
 
+    @property
+    @abc.abstractmethod
+    def face_detection(self) -> face_detection_repository.FaceDetectionRepository:
+        pass
+
+    @property
+    @abc.abstractmethod
+    def watchlist(self) -> watchlist_repository.WatchlistRepository:
+        pass
     # endregion

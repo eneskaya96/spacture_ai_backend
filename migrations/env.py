@@ -79,7 +79,6 @@ def run_migrations_online():
             target_metadata=target_metadata,
             version_table_schema='face_recognition',
             process_revision_directives=process_revision_directives,
-            compare_type=True,
             **current_app.extensions['migrate'].configure_args
         )
 
