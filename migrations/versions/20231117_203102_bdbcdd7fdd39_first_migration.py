@@ -1,8 +1,8 @@
 """first migration
 
-Revision ID: 48419ec60acb
+Revision ID: bdbcdd7fdd39
 Revises: 
-Create Date: 2023-11-16 20:09:28.700804+00:00
+Create Date: 2023-11-17 20:31:02.980358+00:00
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '48419ec60acb'
+revision = 'bdbcdd7fdd39'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -38,10 +38,23 @@ def upgrade():
     )
     op.create_table('watchlist',
     sa.Column('id', sa.String(length=250), nullable=False),
+    sa.Column('company_id', sa.String(length=250), nullable=False),
+    sa.Column('face_detection_id', sa.String(length=250), nullable=False),
+    sa.Column('created_date', sa.DateTime(), nullable=False),
+    sa.Column('modified_date', sa.DateTime(), nullable=True),
+    sa.ForeignKeyConstraint(['company_id'], ['face_recognition.company.id'], ),
+    sa.ForeignKeyConstraint(['face_detection_id'], ['face_recognition.face_detection.id'], ),
+    sa.PrimaryKeyConstraint('id'),
+    schema='face_recognition'
+    )
+    op.create_table('watchlist_face_detection',
+    sa.Column('id', sa.String(length=250), nullable=False),
+    sa.Column('watchlist_id', sa.String(length=250), nullable=False),
     sa.Column('face_detection_id', sa.String(length=250), nullable=False),
     sa.Column('created_date', sa.DateTime(), nullable=False),
     sa.Column('modified_date', sa.DateTime(), nullable=True),
     sa.ForeignKeyConstraint(['face_detection_id'], ['face_recognition.face_detection.id'], ),
+    sa.ForeignKeyConstraint(['watchlist_id'], ['face_recognition.watchlist.id'], ),
     sa.PrimaryKeyConstraint('id'),
     schema='face_recognition'
     )
@@ -55,6 +68,7 @@ def downgrade():
     sa.Column('version_num', sa.VARCHAR(length=32), autoincrement=False, nullable=False),
     sa.PrimaryKeyConstraint('version_num', name='alembic_version_pkc')
     )
+    op.drop_table('watchlist_face_detection', schema='face_recognition')
     op.drop_table('watchlist', schema='face_recognition')
     op.drop_table('face_detection', schema='face_recognition')
     op.drop_table('company', schema='face_recognition')

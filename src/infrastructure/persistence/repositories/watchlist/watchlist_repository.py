@@ -1,3 +1,5 @@
+from typing import Optional
+
 from src.domain.watchlist.entities.watchlist import Watchlist as DomainWatchlist
 from src.domain.watchlist.repositories.watchlist_repository import WatchlistRepository as WatchlistDomainRepository
 from src.infrastructure.entities.watchlist.watchlist import Watchlist
@@ -9,3 +11,5 @@ class WatchlistRepository(BaseGenericRepository[DomainWatchlist], WatchlistDomai
     def __init__(self) -> None:
         super().__init__(Watchlist, DomainWatchlist)
 
+    def get_watchlist(self, offset: int) -> Optional[Watchlist]:
+        pass

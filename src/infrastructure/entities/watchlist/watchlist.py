@@ -6,12 +6,14 @@ from src.infrastructure.entities.base_entity import BaseStrEntity
 
 @dataclass
 class Watchlist(BaseStrEntity):
+    company_id: str
     face_detection_id: str
 
     class Config:
         orm_mode = True
 
     @classmethod
-    def create_watchlist(cls,
+    def create_watchlist(cls, company_id: str,
                          face_detection_id: str) -> Watchlist:
-        return cls(face_detection_id=face_detection_id)
+        return cls(company_id=company_id,
+                   face_detection_id=face_detection_id,)

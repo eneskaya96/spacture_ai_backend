@@ -16,3 +16,6 @@ def initialize_routes(app, socketio):
 
     from src.api.face_detection_routes import initialize_face_detection_routes
     initialize_face_detection_routes(app=app, socketio=socketio)
+
+    from src.api.watchlist_routes import initialize_watchlist_routes
+    initialize_watchlist_routes(app=app, socketio=socketio)

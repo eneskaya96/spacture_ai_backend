@@ -1,6 +1,7 @@
 import logging
 from typing import Optional
 
+from src.api.models.dto.face_detection.face_detection_request_dto import FaceDetectionRequestDto
 from src.domain.face_detection.entities.face_detection import FaceDetection
 from src.domain.seed_work.repository.unit_of_work import UnitOfWork
 from src.services.base.base_service import BaseService
@@ -33,3 +34,18 @@ class FaceDetectionService(BaseService):
         print("Notify is sent")
 
         return face_detection
+
+    def create_face_detection(self, face_detection_request_dto: FaceDetectionRequestDto) -> FaceDetection:
+        """
+        Create a new face detection and returns it
+        :param face_detection_request_dto
+        """
+
+        new_face_detection = FaceDetection.create_face_detection(face_detection_request_dto.company_id,
+                                                                 face_detection_request_dto.image_url)
+
+        with self.uow:
+            self.uow.face_detection.insert(new_face_detection)
+
+        self.logger.info(f'Face detection {face_detection_request_dto.image_url} is created')
+        return new_face_detection
