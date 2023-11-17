@@ -33,8 +33,9 @@ def notify_face_detected(face_detection_id):
     print("Response:", response.json())
     return response.json()
 
-company_id = "4d1bc09a-a089-4cd5-bc13-843345c27af3"
-image_url = 8
-#add_face_detection(company_id, image_url)
 
-notify_face_detected("99758de4-b84c-4bb7-b940-c674d14550d1")
+company_id = "4d1bc09a-a089-4cd5-bc13-843345c27af3"
+image_url = "8_pair"
+add_face_detection(company_id, image_url)
+
+#notify_face_detected("99758de4-b84c-4bb7-b940-c674d14550d1")
