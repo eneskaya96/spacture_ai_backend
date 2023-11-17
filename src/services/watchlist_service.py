@@ -1,5 +1,5 @@
 import logging
-from typing import Optional
+from typing import Optional, List
 
 from src.api.models.dto.watchlist.watchlist_face_detection_request_dto import WatchlistFaceDetectionRequestDto
 from src.api.models.dto.watchlist.watchlist_request_dto import WatchlistRequestDto
@@ -87,3 +87,11 @@ class WatchlistService(BaseService):
         self.logger.info(f'Watchlist face detection is created for  request: {watchlist_face_detection_request_dto}')
 
         return new_watchlist_face_detection
+
+    def get_face_detections(self, company_id: str) -> Optional[List[Watchlist]]:
+        """
+        Get all watchlist for a company
+        :param company_id
+        """
+
+        return self.uow.watchlist.get_watchlist_by_company_id(company_id)

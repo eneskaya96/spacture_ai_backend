@@ -47,6 +47,13 @@ def watchlist_detected(watchlist_face_detection_id):
     print("Response:", response.json())
     return response.json()
 
+def get_all_watchlist(company_id):
+    url = f"http://192.168.1.34:5000/api/watchlist/{company_id}"
+    response = requests.get(url, headers={'Content-Type': 'application/json'})
+
+    print("Status:", response.status_code)
+    print("Response:", response.json())
+    return response.json()
 
 """
 company_id = "4d1bc09a-a089-4cd5-bc13-843345c27af3"
@@ -61,5 +68,10 @@ create_watchlist_face_detection(watchlist_id, face_detection_id)
 
 """
 
+"""
 watchlist_face_detection_id = "32ca5fca-0167-4a9c-abd9-cb510567c02d"
 watchlist_detected(watchlist_face_detection_id)
+"""
+
+company_id = "4d1bc09a-a089-4cd5-bc13-843345c27af3"
+get_all_watchlist(company_id)

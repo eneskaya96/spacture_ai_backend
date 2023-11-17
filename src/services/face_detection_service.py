@@ -1,5 +1,5 @@
 import logging
-from typing import Optional
+from typing import Optional, List
 
 from src.api.models.dto.face_detection.face_detection_request_dto import FaceDetectionRequestDto
 from src.domain.face_detection.entities.face_detection import FaceDetection
@@ -49,3 +49,11 @@ class FaceDetectionService(BaseService):
 
         self.logger.info(f'Face detection {face_detection_request_dto.image_url} is created')
         return new_face_detection
+
+    def get_face_detections(self, company_id: str) -> Optional[List[FaceDetection]]:
+        """
+        Get all face detections for a company
+        :param company_id
+        """
+
+        return self.uow.face_detection.get_face_detection_by_company_id(company_id)

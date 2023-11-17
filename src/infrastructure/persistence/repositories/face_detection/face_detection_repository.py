@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Optional, List
 
 from src.domain.face_detection.entities.face_detection import FaceDetection as DomainFaceDetection
 from src.domain.face_detection.repositories.face_detection_repository import FaceDetectionRepository as FaceDetectionDomainRepository
@@ -11,5 +11,5 @@ class FaceDetectionRepository(BaseGenericRepository[DomainFaceDetection], FaceDe
     def __init__(self) -> None:
         super().__init__(FaceDetection, DomainFaceDetection)
 
-    def get_face_detection(self, offset: int) -> Optional[FaceDetection]:
-        pass
+    def get_face_detection_by_company_id(self, company_id: str) -> Optional[List[FaceDetection]]:
+        return self.session.query(FaceDetection).filter(FaceDetection.company_id == company_id).all()

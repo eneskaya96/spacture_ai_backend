@@ -24,7 +24,8 @@ class DetectedPersonService:
 
         detected_person = {
             "id": "ID_" + str(DetectedPersonService.detected_count),
-            "image_url": url,
+            "url": url,
+            "name": name,
             "detection_date": now.strftime("%Y-%m-%d %H:%M:%S"),
             "thread": thread
         }

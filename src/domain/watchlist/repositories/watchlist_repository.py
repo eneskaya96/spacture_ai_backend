@@ -1,5 +1,5 @@
 import abc
-from typing import Optional
+from typing import Optional, List
 
 from src.domain.seed_work.repository.base_repository import BaseRepository
 from src.domain.watchlist.entities.watchlist import Watchlist
@@ -7,5 +7,5 @@ from src.domain.watchlist.entities.watchlist import Watchlist
 
 class WatchlistRepository(BaseRepository[Watchlist], abc.ABC):
     @abc.abstractmethod
-    def get_watchlist(self, offset: int) -> Optional[Watchlist]:
+    def get_watchlist_by_company_id(self, company_id: str) -> Optional[List[Watchlist]]:
         pass
