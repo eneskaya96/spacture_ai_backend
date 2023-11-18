@@ -5,12 +5,10 @@ from src.api.models.dto.face_detection.face_detection_request_dto import FaceDet
 from src.domain.face_detection.entities.face_detection import FaceDetection
 from src.domain.seed_work.repository.unit_of_work import UnitOfWork
 from src.services.base.base_service import BaseService
-from src.services.detected_person_service import DetectedPersonService
 
 
 class FaceDetectionService(BaseService):
     logger = logging.getLogger(__name__)
-    detected_person_service = DetectedPersonService()
 
     def __init__(self, socketio, uow: Optional[UnitOfWork] = None) -> None:
         self.socketio = socketio
@@ -27,7 +25,13 @@ class FaceDetectionService(BaseService):
 
         self.logger.info(f'Face detection is obtained by id: {face_detection_id} ')
 
-        detected_person = self.detected_person_service.create_detected_person(8, True)
+        detected_person = {
+            "id": face_detection.id,
+            "image_url": face_detection.image_url,
+            "match_image_url": None,
+            "created_date": face_detection.created_date.strftime("%Y-%m-%d %H:%M:%S"),
+            "thread": False
+        }
 
         self.socketio.emit('new_detection', {'data': [detected_person]}, namespace='/')
 

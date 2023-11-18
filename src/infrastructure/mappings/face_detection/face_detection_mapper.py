@@ -2,7 +2,6 @@ from typing import Dict
 
 from sqlalchemy import MetaData, Table, Column, DateTime, String, ForeignKey
 
-
 from src.infrastructure.entities.face_detection.face_detection import FaceDetection
 from src.infrastructure.mappings import BaseMapper
 

@@ -54,10 +54,10 @@ class WatchlistService(BaseService):
         new_face_detection = self.uow.face_detection.get(watchlist_face_detection.face_detection_id)
 
         detected_person = {
-            "id": "ID_" + str(old_face_detection.id),
+            "id": old_face_detection.id,
             "image_url": old_face_detection.image_url,
             "match_image_url": new_face_detection.image_url,
-            "detection_date": watchlist_face_detection.created_date.strftime("%Y-%m-%d %H:%M:%S"),
+            "created_date": watchlist_face_detection.created_date.strftime("%Y-%m-%d %H:%M:%S"),
             "thread": True
         }
 
@@ -95,3 +95,11 @@ class WatchlistService(BaseService):
         """
 
         return self.uow.watchlist.get_watchlist_by_company_id(company_id)
+
+    def get_all_watchlist_face_detections(self, company_id: str) -> Optional[List[Watchlist]]:
+        """
+        Get all watchlist for a company
+        :param company_id
+        """
+
+        return self.uow.watchlist_face_detection.get_watchlist(company_id)

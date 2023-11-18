@@ -68,10 +68,10 @@ create_watchlist_face_detection(watchlist_id, face_detection_id)
 
 """
 
-"""
 watchlist_face_detection_id = "32ca5fca-0167-4a9c-abd9-cb510567c02d"
 watchlist_detected(watchlist_face_detection_id)
-"""
 
+"""
 company_id = "4d1bc09a-a089-4cd5-bc13-843345c27af3"
 get_all_watchlist(company_id)
+"""

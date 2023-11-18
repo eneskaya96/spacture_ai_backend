@@ -1,6 +1,9 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+
+from sqlalchemy.orm import relationship
+
 from src.infrastructure.entities.base_entity import BaseStrEntity
 
 

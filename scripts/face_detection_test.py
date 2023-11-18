@@ -42,15 +42,17 @@ def get_all_face_detection(company_id):
     print("Response:", response.json())
     return response.json()
 
+
 """
 company_id = "4d1bc09a-a089-4cd5-bc13-843345c27af3"
-image_url = "8_pair"
+image_url = "4"
 add_face_detection(company_id, image_url)
-
 """
 
-#notify_face_detected("99758de4-b84c-4bb7-b940-c674d14550d1")
+notify_face_detected("49617e5c-7b65-46cf-9128-30ad4c2a3e30")
 
 
+"""
 company_id = "4d1bc09a-a089-4cd5-bc13-843345c27af3"
 get_all_face_detection(company_id)
+"""

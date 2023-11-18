@@ -24,6 +24,37 @@ def initialize_watchlist_routes(app, socketio):
         watchlist_response_dto = WatchlistResponseDto.create(watchlist)
         return BaseResponse.create_response(message='Watchlist is created', data=watchlist_response_dto)
 
+    @app.route('/api/watchlist/<string:company_id>', methods=['GET'])
+    def get_all_watchlist(company_id: str):
+        watchlist_service = WatchlistService(socketio)
+
+        watchlists = watchlist_service.get_face_detections(company_id)
+        print("watchlists", watchlists)
+        watchlists_response_dto = WatchlistsResponseDto.create(watchlists)
+        return BaseResponse.create_response(message='Watchlists are get', data=watchlists_response_dto)
+
+    @app.route('/api/watchlist_face_detection', methods=['POST'])
+    def create_watchlist_face_detection():
+        watchlist_face_detection_request_dto: WatchlistFaceDetectionRequestDto = WatchlistFaceDetectionRequestDto.parse_obj(
+            request.get_json()
+        )
+        watchlist_service = WatchlistService(socketio)
+
+        watchlist_face_detection = watchlist_service.create_watchlist_face_detection(
+            watchlist_face_detection_request_dto)
+        watchlist_face_detection_response_dto = WatchlistFaceDetectionResponseDto.create(watchlist_face_detection)
+        return BaseResponse.create_response(message='Watchlist Face detection is created',
+                                            data=watchlist_face_detection_response_dto)
+
+    @app.route('/api/watchlist/<string:company_id>', methods=['GET'])
+    def get_all_watchlist_face_detection(company_id: str):
+        watchlist_service = WatchlistService(socketio)
+
+        watchlists = watchlist_service.get_face_detections(company_id)
+        print("watchlists", watchlists)
+        watchlists_response_dto = WatchlistsResponseDto.create(watchlists)
+        return BaseResponse.create_response(message='Watchlists are get', data=watchlists_response_dto)
+
     @app.route('/api/watchlist_detected', methods=['POST'])
     def watchlist_detected():
         watchlist_detected_request_dto: WatchlistDetectedRequestDto = WatchlistDetectedRequestDto.parse_obj(
@@ -34,21 +65,3 @@ def initialize_watchlist_routes(app, socketio):
         watchlist_service.notify_watchlist_detected(watchlist_detected_request_dto.watchlist_face_detection_id)
         return BaseResponse.create_response(message='Watchlist detected notified')
 
-    @app.route('/api/watchlist_face_detection', methods=['POST'])
-    def create_watchlist_face_detection():
-        watchlist_face_detection_request_dto: WatchlistFaceDetectionRequestDto = WatchlistFaceDetectionRequestDto.parse_obj(
-            request.get_json()
-        )
-        watchlist_service = WatchlistService(socketio)
-
-        watchlist_face_detection = watchlist_service.create_watchlist_face_detection(watchlist_face_detection_request_dto)
-        watchlist_face_detection_response_dto = WatchlistFaceDetectionResponseDto.create(watchlist_face_detection)
-        return BaseResponse.create_response(message='Watchlist Face detection is created', data=watchlist_face_detection_response_dto)
-
-    @app.route('/api/watchlist/<string:company_id>', methods=['GET'])
-    def get_all_watchlist(company_id: str):
-        watchlist_service = WatchlistService(socketio)
-
-        watchlists = watchlist_service.get_face_detections(company_id)
-        watchlists_response_dto = WatchlistsResponseDto.create(watchlists)
-        return BaseResponse.create_response(message='Watchlists are get', data=watchlists_response_dto)
