@@ -1,10 +1,7 @@
 from __future__ import annotations
 
-from typing import List
 from pydantic import BaseModel
 from datetime import datetime
-
-from src.domain.watchlist.entities.watchlist import Watchlist
 
 
 class WatchlistsResponseDto(BaseModel):

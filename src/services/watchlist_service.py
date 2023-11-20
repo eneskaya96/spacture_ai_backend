@@ -68,23 +68,38 @@ class WatchlistService(BaseService):
         Create a new watchlist face detection and returns it
         :param watchlist_face_detection_request_dto
         """
-
-        if not self.uow.watchlist.get(watchlist_face_detection_request_dto.watchlist_id):
+        watchlist = self.uow.watchlist.get_watchlist_by_face_detection_id(
+            watchlist_face_detection_request_dto.old_face_detection_id)
+        if not watchlist:
             self.logger.error(
-                f'Watchlist with id: {watchlist_face_detection_request_dto.watchlist_id} is not found on DB')
+                f'Watchlist item with face_detection id: {watchlist_face_detection_request_dto.old_face_detection_id} '
+                f'is not found on DB')
 
         if not self.uow.face_detection.get(watchlist_face_detection_request_dto.face_detection_id):
             self.logger.error(
                 f'Face detection with id: {watchlist_face_detection_request_dto.face_detection_id} is not found on DB')
 
         new_watchlist_face_detection = WatchlistFaceDetection.create_watchlist_face_detection(
-            watchlist_face_detection_request_dto.watchlist_id,
+            watchlist.id,
             watchlist_face_detection_request_dto.face_detection_id)
 
         with self.uow:
             self.uow.watchlist_face_detection.insert(new_watchlist_face_detection)
 
         self.logger.info(f'Watchlist face detection is created for  request: {watchlist_face_detection_request_dto}')
+
+        old_face_detection = self.uow.face_detection.get(watchlist_face_detection_request_dto.old_face_detection_id)
+        new_face_detection = self.uow.face_detection.get(watchlist_face_detection_request_dto.face_detection_id)
+
+        detected_person = {
+            "id": old_face_detection.id,
+            "image_url": old_face_detection.image_url,
+            "match_image_url": new_face_detection.image_url,
+            "created_date": new_watchlist_face_detection.created_date.strftime("%Y-%m-%d %H:%M:%S"),
+            "thread": True
+        }
+
+        self.socketio.emit('new_detection', {'data': [detected_person]}, namespace='/')
 
         return new_watchlist_face_detection
 

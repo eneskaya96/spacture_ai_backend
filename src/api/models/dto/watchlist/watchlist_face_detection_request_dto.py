@@ -6,11 +6,13 @@ from pydantic import BaseModel
 
 
 class WatchlistFaceDetectionRequestDto(BaseModel):
-    watchlist_id: str
+    company_id: str
+    old_face_detection_id: str
     face_detection_id: str
 
     def dict(self, *args: Any, **kwargs: Any) -> Dict[str, Any]:
         return {
-            'watchlist_id': self.watchlist_id,
+            'company_id': self.company_id,
+            'old_face_detection_id': self.old_face_detection_id,
             'face_detection_id': self.face_detection_id
         }

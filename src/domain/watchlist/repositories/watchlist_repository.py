@@ -9,3 +9,8 @@ class WatchlistRepository(BaseRepository[Watchlist], abc.ABC):
     @abc.abstractmethod
     def get_watchlist_by_company_id(self, company_id: str) -> Optional[Dict]:
         pass
+
+    @abc.abstractmethod
+    def get_watchlist_by_face_detection_id(self, face_detection_id: str) -> Optional[Watchlist]:
+        pass
+

@@ -35,3 +35,6 @@ class WatchlistRepository(BaseGenericRepository[DomainWatchlist], WatchlistDomai
             for row in res
         ]
         return result_dicts
+
+    def get_watchlist_by_face_detection_id(self, face_detection_id: str) -> Optional[Watchlist]:
+        return self.session.query(Watchlist).filter(Watchlist.face_detection_id == face_detection_id).one_or_none()
