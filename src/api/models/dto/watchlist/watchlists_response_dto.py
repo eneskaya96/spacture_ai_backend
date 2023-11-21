@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from typing import Optional, Dict
+
 from pydantic import BaseModel
 from datetime import datetime
 
@@ -12,5 +14,5 @@ class WatchlistsResponseDto(BaseModel):
     created_date: datetime
 
     @classmethod
-    def create(cls, watchlist_data: list[dict]) -> list[WatchlistsResponseDto]:
+    def create(cls, watchlist_data: Optional[Dict]) -> list[WatchlistsResponseDto]:
         return [cls(**item) for item in watchlist_data]

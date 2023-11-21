@@ -1,16 +1,24 @@
 from __future__ import annotations
-from pydantic import BaseModel
 
-from src.infrastructure.entities.watchlist.watchlist_face_detection import WatchlistFaceDetection
+from typing import Dict
+
+from pydantic import BaseModel
+from datetime import datetime
 
 
 class WatchlistFaceDetectionResponseDto(BaseModel):
-    watchlist_id: str
-    face_detection_id: str
+    id: str
+    image_url: str
+    match_image_url: str
+    created_date: datetime
+    thread: bool
 
     @classmethod
-    def create(cls, watchlist_face_detection: WatchlistFaceDetection) -> WatchlistFaceDetectionResponseDto:
+    def create(cls, detected_person: Dict) -> WatchlistFaceDetectionResponseDto:
         return cls(
-            watchlist_id=watchlist_face_detection.id,
-            face_detection_id=watchlist_face_detection.face_detection_id
+            id=detected_person.get('id', ''),
+            image_url=detected_person.get('image_url', ''),
+            match_image_url=detected_person.get('match_image_url', ''),
+            created_date=detected_person.get('created_date', datetime.now()),
+            thread=detected_person.get('thread', False)
         )

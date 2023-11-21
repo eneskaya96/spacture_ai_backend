@@ -8,8 +8,8 @@ def initialize_routes(app, socketio):
     from src.api.notification_routes import initialize_notification_routes
     initialize_notification_routes(app=app)
 
-    from src.api.rigth_panel_routes import initialize_right_panel_routes
-    initialize_right_panel_routes(app=app, socketio=socketio)
+    from src.api.image_serve_routes import initialize_image_serve_routes
+    initialize_image_serve_routes(app=app, socketio=socketio)
 
     from src.api.company_routes import initialize_company_routes
     initialize_company_routes(app=app)

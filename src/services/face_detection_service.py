@@ -5,13 +5,14 @@ from src.api.models.dto.face_detection.face_detection_request_dto import FaceDet
 from src.domain.face_detection.entities.face_detection import FaceDetection
 from src.domain.seed_work.repository.unit_of_work import UnitOfWork
 from src.services.base.base_service import BaseService
+from src.services.detected_images import DetectedFaceService
 
 
 class FaceDetectionService(BaseService):
     logger = logging.getLogger(__name__)
 
     def __init__(self, socketio, uow: Optional[UnitOfWork] = None) -> None:
-        self.socketio = socketio
+        self.detected_face_service = DetectedFaceService(socketio)
         super().__init__(uow)
 
     def notify_face_detected(self, face_detection_id: str) -> FaceDetection:
@@ -20,8 +21,7 @@ class FaceDetectionService(BaseService):
         :param face_detection_id
         """
 
-        with self.uow:
-            face_detection = self.uow.face_detection.get(face_detection_id)
+        face_detection = self.uow.face_detection.get(face_detection_id)
 
         self.logger.info(f'Face detection is obtained by id: {face_detection_id} ')
 
@@ -33,9 +33,7 @@ class FaceDetectionService(BaseService):
             "thread": False
         }
 
-        self.socketio.emit('new_detection', {'data': [detected_person]}, namespace='/')
-
-        print("Notify is sent")
+        self.detected_face_service.notify_detected_face(detected_person)
 
         return face_detection
 

@@ -23,7 +23,6 @@ class WatchlistRepository(BaseGenericRepository[DomainWatchlist], WatchlistDomai
             .filter(Watchlist.company_id == company_id) \
             .filter(Watchlist.face_detection_id == FaceDetection.id) \
             .all()
-        print("res", res)
         result_dicts = [
             {
                 'id': row[0],

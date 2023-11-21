@@ -1,4 +1,4 @@
-from typing import Optional, Dict
+from typing import Optional, Dict, List, Type
 
 from src.domain.watchlist.entities.watchlistFaceDetection import WatchlistFaceDetection as DomainWatchlistFaceDetection
 from src.domain.watchlist.repositories.watchlist_face_detection_repository import WatchlistFaceDetectionRepository as WatchlistFaceDetectionDomainRepository
@@ -11,5 +11,5 @@ class WatchlistFaceDetectionRepository(BaseGenericRepository[DomainWatchlistFace
     def __init__(self) -> None:
         super().__init__(WatchlistFaceDetection, DomainWatchlistFaceDetection)
 
-    def get_watchlist_face_detections(self, company_id: str) -> Optional[Dict]:
-        pass
+    def get_watchlist_face_detections(self, watchlist_ids: List[str]) -> list[Type[WatchlistFaceDetection]]:
+        return self.session.query(WatchlistFaceDetection).filter(WatchlistFaceDetection.watchlist_id.in_(watchlist_ids)).all()

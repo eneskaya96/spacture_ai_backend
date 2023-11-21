@@ -9,8 +9,6 @@ from src.configs.config_manager import ConfigManager
 
 gevent.monkey.patch_all(ssl=False)
 
-ip = "192.168.1.34"
-
 
 def create_app():
     app = Flask(__name__)
@@ -43,5 +41,6 @@ if __name__ == '__main__':
     from gevent.pywsgi import WSGIServer
     from geventwebsocket.handler import WebSocketHandler
 
-    http_server = WSGIServer((ip, 5000), app, handler_class=WebSocketHandler)
+    print("Spacture Backend is Alive")
+    http_server = WSGIServer((ConfigManager.config.IP, 5000), app, handler_class=WebSocketHandler)
     http_server.serve_forever()

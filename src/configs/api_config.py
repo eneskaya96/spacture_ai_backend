@@ -9,9 +9,6 @@ from pydantic import Field, Extra
 from src.configs.base_config import BaseConfig
 
 envs_dir = os.path.join(Path(__file__).parent.parent.parent.absolute(), 'envs')
-print("-----------------------")
-print(envs_dir)
-
 
 class GlobalConfig(BaseConfig):
     """Global Configuration"""
@@ -22,6 +19,8 @@ class GlobalConfig(BaseConfig):
     POSTGRES_PASSWORD: Optional[str]
     POSTGRES_USER: Optional[str]
     POSTGRES_DB_NAME: Optional[str]
+
+    IP: Optional[str]
 
     SALT_SECRET_KEY: str = Field('\x1bEy6\xcc\x96\x16\xb3E!\xec\xd6\xb3M\xcf\x90')
 

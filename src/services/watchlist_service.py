@@ -1,12 +1,14 @@
 import logging
-from typing import Optional, List
+from typing import Optional, List, Dict
 
 from src.api.models.dto.watchlist.watchlist_face_detection_request_dto import WatchlistFaceDetectionRequestDto
+from src.api.models.dto.watchlist.watchlist_face_detection_response_dto import WatchlistFaceDetectionResponseDto
 from src.api.models.dto.watchlist.watchlist_request_dto import WatchlistRequestDto
 from src.domain.watchlist.entities.watchlist import Watchlist
 from src.domain.watchlist.entities.watchlistFaceDetection import WatchlistFaceDetection
 from src.domain.seed_work.repository.unit_of_work import UnitOfWork
 from src.services.base.base_service import BaseService
+from src.services.detected_images import DetectedFaceService
 
 
 class WatchlistService(BaseService):
@@ -14,6 +16,7 @@ class WatchlistService(BaseService):
 
     def __init__(self, socketio, uow: Optional[UnitOfWork] = None) -> None:
         self.socketio = socketio
+        self.detected_face_service = DetectedFaceService(socketio)
         super().__init__(uow)
 
     def create_watchlist(self, watchlist_request_dto: WatchlistRequestDto) -> Watchlist:
@@ -34,8 +37,6 @@ class WatchlistService(BaseService):
             self.uow.watchlist.insert(new_watchlist)
 
         self.logger.info(f'Watchlist detection is created for  request: {watchlist_request_dto}')
-
-        self.socketio.emit('new_watchlist', {'data': [new_watchlist.id]}, namespace='/')
 
         return new_watchlist
 
@@ -72,7 +73,7 @@ class WatchlistService(BaseService):
             watchlist_face_detection_request_dto.old_face_detection_id)
         if not watchlist:
             self.logger.error(
-                f'Watchlist item with face_detection id: {watchlist_face_detection_request_dto.old_face_detection_id} '
+                f'Watchlist item with old_face_detection id: {watchlist_face_detection_request_dto.old_face_detection_id} '
                 f'is not found on DB')
 
         if not self.uow.face_detection.get(watchlist_face_detection_request_dto.face_detection_id):
@@ -98,12 +99,11 @@ class WatchlistService(BaseService):
             "created_date": new_watchlist_face_detection.created_date.strftime("%Y-%m-%d %H:%M:%S"),
             "thread": True
         }
+        self.detected_face_service.notify_detected_face(detected_person)
 
-        self.socketio.emit('new_detection', {'data': [detected_person]}, namespace='/')
+        return detected_person
 
-        return new_watchlist_face_detection
-
-    def get_face_detections(self, company_id: str) -> Optional[List[Watchlist]]:
+    def get_all_watchlist(self, company_id: str) -> Optional[Dict]:
         """
         Get all watchlist for a company
         :param company_id
@@ -111,10 +111,34 @@ class WatchlistService(BaseService):
 
         return self.uow.watchlist.get_watchlist_by_company_id(company_id)
 
-    def get_all_watchlist_face_detections(self, company_id: str) -> Optional[List[Watchlist]]:
+    def get_all_watchlist_face_detections(self, company_id: str) -> list[dict]:
         """
         Get all watchlist for a company
         :param company_id
         """
+        list_watchlist = self.uow.watchlist.get_watchlist_by_company_id(company_id)
+        list_watchlist_ids = [item['id'] for item in list_watchlist]
 
-        return self.uow.watchlist_face_detection.get_watchlist(company_id)
+        list_of_watchlist_face_detection \
+            = self.uow.watchlist_face_detection.get_watchlist_face_detections(list_watchlist_ids)
+
+        detected_persons = []
+
+        for watchlist_face_detection in list_of_watchlist_face_detection:
+            watchlist = self.uow.watchlist.get(watchlist_face_detection.watchlist_id)
+
+            old_face_detection = self.uow.face_detection.get(watchlist.face_detection_id)
+
+            match_face_detection = self.uow.face_detection.get(watchlist_face_detection.face_detection_id)
+
+            detected_person = {
+                "id": old_face_detection.id,
+                "image_url": old_face_detection.image_url,
+                "match_image_url": match_face_detection.image_url,
+                "created_date": match_face_detection.created_date.strftime("%Y-%m-%d %H:%M:%S"),
+                "thread": True
+            }
+
+            detected_persons.append(detected_person)
+
+        return detected_persons

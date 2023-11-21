@@ -9,6 +9,7 @@ from src.api.models.dto.face_detection.face_detections_response_dto import FaceD
 from src.api.models.dto.face_detection.notify_face_detection_request_dto import NotifyFaceDetectionRequestDto
 from src.services.face_detection_service import FaceDetectionService
 
+
 def initialize_face_detection_routes(app, socketio):
 
     @app.route('/api/face_detection_notify', methods=['POST'])

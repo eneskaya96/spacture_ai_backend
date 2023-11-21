@@ -1,9 +1,14 @@
 import json
 import requests
+import os
+from dotenv import load_dotenv
 
+load_dotenv("../envs/local.env")
+
+base_url = f"http://{os.getenv('IP')}:5000"
 
 def add_face_detection(company_id, image_url):
-    url = "http://192.168.1.34:5000/api/face_detection"
+    url = f"{base_url}/api/face_detection"
     data = {
         "company_id": company_id,
         "image_url": image_url
@@ -20,7 +25,7 @@ def add_face_detection(company_id, image_url):
 
 
 def notify_face_detected(face_detection_id):
-    url = "http://192.168.1.34:5000/api/face_detection_notify"
+    url = f"{base_url}/api/face_detection_notify"
     data = {
         "face_detection_id": face_detection_id,
     }
@@ -35,7 +40,7 @@ def notify_face_detected(face_detection_id):
 
 
 def get_all_face_detection(company_id):
-    url = f"http://192.168.1.34:5000/api/face_detection/{company_id}"
+    url = f"{base_url}/api/face_detection/{company_id}"
     response = requests.get(url, headers={'Content-Type': 'application/json'})
 
     print("Status:", response.status_code)
