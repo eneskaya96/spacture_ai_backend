@@ -21,6 +21,7 @@ class GlobalConfig(BaseConfig):
     POSTGRES_DB_NAME: Optional[str]
 
     IP: Optional[str]
+    IMAGE_DIR: Optional[str]
 
     SALT_SECRET_KEY: str = Field('\x1bEy6\xcc\x96\x16\xb3E!\xec\xd6\xb3M\xcf\x90')
 

@@ -1,10 +1,11 @@
+from src.configs.config_manager import ConfigManager
 from src.services.notificationService import NotificationService
 
 
 class DetectedFaceService:
 
     def __init__(self, socketio):
-        self.image_dir = "./src/assets"
+        self.image_dir = ConfigManager.config.IMAGE_DIR
         self.socketio = socketio
 
     def get_images_directory(self):
