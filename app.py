@@ -27,6 +27,9 @@ def create_app():
     config = ConfigManager.init_config()
     app.config.from_object(config)
 
+    from src.infrastructure.logging.log_manager import LogManager
+    LogManager.init_logger(config)
+
     from src.api import initialize_routes
     initialize_routes(app, socketio)
 
