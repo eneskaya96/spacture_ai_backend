@@ -76,12 +76,12 @@ face_detection_id = "99758de4-b84c-4bb7-b940-c674d14550d1"
 add_watchlist(company_id, face_detection_id)
 """
 
-"""
+
 company_id = "4d1bc09a-a089-4cd5-bc13-843345c27af3"
-old_face_detection_id = "684744be-6600-4162-ad7d-364c37456d5c"
-face_detection_id = "7578c2d9-32bf-41b1-9379-88d291a7b79b"
+old_face_detection_id = "af754802-7db2-4ccf-a160-a1325bdfa8a4"
+face_detection_id = "81c22cbe-7a7a-4870-8827-ad993406689b"
 create_watchlist_face_detection(company_id, old_face_detection_id, face_detection_id)
-"""
+
 
 """
 watchlist_face_detection_id = "32ca5fca-0167-4a9c-abd9-cb510567c02d"
@@ -93,5 +93,7 @@ company_id = "4d1bc09a-a089-4cd5-bc13-843345c27af3"
 get_all_watchlist(company_id)
 """
 
+"""
 company_id = "4d1bc09a-a089-4cd5-bc13-843345c27af3"
 get_all_watchlist_face_detection(company_id)
+"""
