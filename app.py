@@ -4,12 +4,13 @@ from flask_cors import CORS
 from flask_socketio import SocketIO
 
 import gevent.monkey
+
+from src.configs.config_manager import ConfigManager
+
 gevent.monkey.patch_all(ssl=False)
 
-ip = "192.168.1.57"
 
-
-if __name__ == '__main__':
+def create_app():
     app = Flask(__name__)
     scheduler = APScheduler()
     CORS(app, resources={r"*": {"origins": "*"}})
@@ -23,16 +24,26 @@ if __name__ == '__main__':
     scheduler.start()
     """
 
+    config = ConfigManager.init_config()
+    app.config.from_object(config)
+
+    from src.infrastructure.logging.log_manager import LogManager
+    LogManager.init_logger(config)
+
     from src.api import initialize_routes
     initialize_routes(app, socketio)
 
-    """
     from src.infrastructure.db.db_manager import DBManager
     DBManager.start_db(app)
-    """
 
+    return app
+
+
+if __name__ == '__main__':
+    app = create_app()
     from gevent.pywsgi import WSGIServer
     from geventwebsocket.handler import WebSocketHandler
 
-    http_server = WSGIServer((ip, 5000), app, handler_class=WebSocketHandler)
+    print("Spacture Backend is Alive")
+    http_server = WSGIServer((ConfigManager.config.IP, 5000), app, handler_class=WebSocketHandler)
     http_server.serve_forever()

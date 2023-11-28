@@ -1,28 +1,23 @@
-from src.services.detected_person_service import DetectedPersonService
+from src.configs.config_manager import ConfigManager
 from src.services.notificationService import NotificationService
 
 
-class DetectedImagesService:
-    detected_person_service = DetectedPersonService()
+class DetectedFaceService:
 
     def __init__(self, socketio):
-        self.image_dir = "./src/assets"
-        self.detection_count = 8
+        self.image_dir = ConfigManager.config.IMAGE_DIR
         self.socketio = socketio
-
-    def list_detected_images(cls):
-        return cls.detected_person_service.get_detected_persons()
 
     def get_images_directory(self):
         return self.image_dir
 
-    def send_detected_images(self, thread):
-        detected_person = self.detected_person_service.create_detected_person(self.detection_count, thread)
+    def notify_detected_face(self, detected_person):
 
-        self.socketio.emit('new_detection', {'data': [detected_person] }, namespace='/')
+        self.socketio.emit('new_detection', {'data': [detected_person]}, namespace='/')
 
-        self.detection_count = 8 if self.detection_count == 12 else self.detection_count + 1
+        print("Notify is sent")
 
         if detected_person["thread"]:
             notification_service = NotificationService()
             notification_service.send_notification()
+            print("Notification send to mobile app")
