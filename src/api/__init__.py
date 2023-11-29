@@ -1,5 +1,6 @@
 
 
+
 def initialize_routes(app, socketio):
 
     from src.api.camera_stream_routes import initialize_camera_stream_routes
@@ -19,3 +20,6 @@ def initialize_routes(app, socketio):
 
     from src.api.watchlist_routes import initialize_watchlist_routes
     initialize_watchlist_routes(app=app, socketio=socketio)
+
+    from src.api.shoplifting_routes import initialize_shoplifting_routes
+    initialize_shoplifting_routes(app, socketio)

@@ -75,10 +75,12 @@ class WatchlistService(BaseService):
             self.logger.error(
                 f'Watchlist item with old_face_detection id: {watchlist_face_detection_request_dto.old_face_detection_id} '
                 f'is not found on DB')
+            return
 
         if not self.uow.face_detection.get(watchlist_face_detection_request_dto.face_detection_id):
             self.logger.error(
                 f'Face detection with id: {watchlist_face_detection_request_dto.face_detection_id} is not found on DB')
+            return
 
         new_watchlist_face_detection = WatchlistFaceDetection.create_watchlist_face_detection(
             watchlist.id,

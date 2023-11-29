@@ -31,5 +31,4 @@ class NotificationService:
         title = "SUSPICIOUS ALERT"
         message = "Suspicious behaviour detected"
         for token in self.tokens:
-            print(token)
             self.send_push_notification(token=token, title=title, message=message)

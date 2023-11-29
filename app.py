@@ -1,3 +1,5 @@
+import logging
+
 from flask import Flask
 from flask_apscheduler import APScheduler
 from flask_cors import CORS
@@ -44,6 +46,7 @@ if __name__ == '__main__':
     from gevent.pywsgi import WSGIServer
     from geventwebsocket.handler import WebSocketHandler
 
-    print("Spacture Backend is Alive")
+    logger = logging.getLogger(__name__)
+    logger.info(f'Spacture AI Backend is Alive')
     http_server = WSGIServer((ConfigManager.config.IP, 5000), app, handler_class=WebSocketHandler)
     http_server.serve_forever()
