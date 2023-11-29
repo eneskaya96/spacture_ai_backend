@@ -1,8 +1,11 @@
+import logging
+
 from src.configs.config_manager import ConfigManager
 from src.services.notificationService import NotificationService
 
 
 class DetectedFaceService:
+    logger = logging.getLogger(__name__)
 
     def __init__(self, socketio):
         self.image_dir = ConfigManager.config.IMAGE_DIR
@@ -15,9 +18,9 @@ class DetectedFaceService:
 
         self.socketio.emit('new_detection', {'data': [detected_person]}, namespace='/')
 
-        print("Notify is sent")
+        self.logger.info(f'Notify is sent: {detected_person} ')
 
         if detected_person["thread"]:
             notification_service = NotificationService()
             notification_service.send_notification()
-            print("Notification send to mobile app")
+            self.logger.info(f'Notification send to mobile app: {detected_person} ')

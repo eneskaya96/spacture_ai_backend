@@ -77,9 +77,9 @@ add_watchlist(company_id, face_detection_id)
 """
 
 
-company_id = "4d1bc09a-a089-4cd5-bc13-843345c27af3"
-old_face_detection_id = "af754802-7db2-4ccf-a160-a1325bdfa8a4"
-face_detection_id = "81c22cbe-7a7a-4870-8827-ad993406689b"
+company_id = "7375b410-20ff-489c-95df-c198bbc32dda"
+old_face_detection_id = "5d91e964-ceaa-4874-a600-baba7e67b2bf"
+face_detection_id = "95bef5ac-d141-4be7-9c7b-362a554889a4"
 create_watchlist_face_detection(company_id, old_face_detection_id, face_detection_id)
 
 

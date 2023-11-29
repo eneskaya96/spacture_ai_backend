@@ -10,10 +10,12 @@ from src.domain.company.repositories import company_repository
 from src.domain.face_detection.repositories import face_detection_repository
 from src.domain.watchlist.repositories import watchlist_face_detection_repository
 from src.domain.watchlist.repositories import watchlist_repository
+from src.domain.shoplifting.repositories import shoplifting_repository
 from src.infrastructure.persistence.repositories.company_management.company_repository import CompanyRepository
 from src.infrastructure.persistence.repositories.face_detection.face_detection_repository import FaceDetectionRepository
 from src.infrastructure.persistence.repositories.watchlist.watchlist_repository import WatchlistRepository
 from src.infrastructure.persistence.repositories.watchlist.watchlist_face_detection_repository import WatchlistFaceDetectionRepository
+from src.infrastructure.persistence.repositories.shoplifting.shoplifting_repository import ShopliftingRepository
 from src.infrastructure.persistence.repositories.base_repository import TRepo
 
 
@@ -61,6 +63,9 @@ class UnitOfWork(BaseDomainUnitOfWork):
     def watchlist_face_detection(self) -> watchlist_face_detection_repository.WatchlistFaceDetectionRepository:
         return self.__get_repository(WatchlistFaceDetectionRepository)(self.session, not self._depth)
 
+    @property
+    def shoplifting(self) -> shoplifting_repository.ShopliftingRepository:
+        return self.__get_repository(ShopliftingRepository)(self.session, not self._depth)
     # endregion
 
     @property
