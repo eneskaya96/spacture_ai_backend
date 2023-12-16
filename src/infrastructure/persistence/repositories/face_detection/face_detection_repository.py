@@ -12,4 +12,6 @@ class FaceDetectionRepository(BaseGenericRepository[DomainFaceDetection], FaceDe
         super().__init__(FaceDetection, DomainFaceDetection)
 
     def get_face_detection_by_company_id(self, company_id: str) -> Optional[List[FaceDetection]]:
-        return self.session.query(FaceDetection).filter(FaceDetection.company_id == company_id).all()
+        face_detections = self.session.query(FaceDetection).filter(FaceDetection.company_id == company_id).all()
+
+        return [DomainFaceDetection.parse_obj(face_detection.__dict__) for face_detection in face_detections]
