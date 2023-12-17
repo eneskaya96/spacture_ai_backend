@@ -44,7 +44,6 @@ class UnitOfWork(BaseDomainUnitOfWork):
             self.logger.debug(f'UOW context with id {self._session_uuid} is reached to depth 0,'
                               f' exiting the UOW context completely.')
             super().__exit__(exc_type, exc_val, exc_tb)
-            self.close()
 
     # region Subscription Repositories
     @property
@@ -91,11 +90,14 @@ class UnitOfWork(BaseDomainUnitOfWork):
     def is_in_context(self) -> bool:
         return self._depth > 0
 
-    def close(self) -> None:
-        if self._session:  # pragma: no cover
-            self.logger.debug(f'Closing the session of UOW context with id {self._session_uuid}')
-            self._session.close()
-            self._session = None
+    def _close(self) -> None:
+        if not self._session:
+            return
+
+        self.logger.debug('Closing the session of UOW context')
+        self._session.close()
+        self._session = None
+        DBManager.invalidate_scoped_session()
 
     def __get_repository(self, repo_type: Type[TRepo]) -> TRepo:
         repository = self._repositories.get(repo_type.__name__)
