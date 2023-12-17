@@ -26,6 +26,8 @@ class UnitOfWork(abc.ABC):
             self.logger.error('An error occurred performing a DB operation', exc_info=True)
             self.rollback()
             print('An error occurred performing a DB operation')
+        finally:
+            self._close()
 
     @abc.abstractmethod
     def commit(self) -> None:
@@ -33,6 +35,10 @@ class UnitOfWork(abc.ABC):
 
     @abc.abstractmethod
     def rollback(self) -> None:
+        pass
+
+    @abc.abstractmethod
+    def _close(self) -> None:
         pass
 
     @abc.abstractmethod
