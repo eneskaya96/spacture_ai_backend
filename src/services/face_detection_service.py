@@ -57,5 +57,4 @@ class FaceDetectionService(BaseService):
         Get all face detections for a company
         :param company_id
         """
-
         return self.uow.face_detection.get_face_detection_by_company_id(company_id)
