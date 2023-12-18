@@ -2,7 +2,6 @@ import logging
 from typing import Optional, List, Dict
 
 from src.api.models.dto.watchlist.watchlist_face_detection_request_dto import WatchlistFaceDetectionRequestDto
-from src.api.models.dto.watchlist.watchlist_face_detection_response_dto import WatchlistFaceDetectionResponseDto
 from src.api.models.dto.watchlist.watchlist_request_dto import WatchlistRequestDto
 from src.domain.watchlist.entities.watchlist import Watchlist
 from src.domain.watchlist.entities.watchlistFaceDetection import WatchlistFaceDetection
@@ -102,7 +101,7 @@ class WatchlistService(BaseService):
             "created_date": new_watchlist_face_detection.created_date.strftime("%Y-%m-%d %H:%M:%S"),
             "thread": True
         }
-        self.detected_face_service.notify_detected_face(detected_person)
+        self.detected_face_service.notify_detected_face(detected_person, company_id=old_face_detection.company_id)
 
         return detected_person
 

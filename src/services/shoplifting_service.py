@@ -42,7 +42,7 @@ class ShopliftingService(BaseService):
             "thread": True
         }
 
-        self.detected_face_service.notify_detected_face(detected_person)
+        self.detected_face_service.notify_detected_face(detected_person, face_detection.company_id)
 
         return shoplifting
 

@@ -6,6 +6,7 @@ from typing import Any
 
 from src.domain.company.repositories import company_repository
 from src.domain.face_detection.repositories import face_detection_repository
+from src.domain.notification.repositories import notification_repository
 from src.domain.shoplifting.repositories import shoplifting_repository
 from src.domain.watchlist.repositories import watchlist_repository, watchlist_face_detection_repository
 
@@ -69,5 +70,10 @@ class UnitOfWork(abc.ABC):
     @property
     @abc.abstractmethod
     def shoplifting(self) -> shoplifting_repository.ShopliftingRepository:
+        pass
+
+    @property
+    @abc.abstractmethod
+    def notification(self) -> notification_repository.NotificationRepository:
         pass
     # endregion

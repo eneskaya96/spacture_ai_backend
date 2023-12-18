@@ -7,9 +7,10 @@ Flask-APScheduler==1.13.1
 flask_migrate==4.0.5
 gevent==23.9.1
 gevent-websocket==0.10.1
-urllib3==2.1.0
+urllib3==1.26.16
 Flask-SQLAlchemy==3.1.1
 python-dotenv==1.0.0
+onesignal-sdk==2.0.0
 
 # DB
 SQLAlchemy==2.0.23

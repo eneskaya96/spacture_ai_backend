@@ -10,6 +10,7 @@ from src.configs.base_config import BaseConfig
 
 envs_dir = os.path.join(Path(__file__).parent.parent.parent.absolute(), 'envs')
 
+
 class GlobalConfig(BaseConfig):
     """Global Configuration"""
 
@@ -34,6 +35,9 @@ class GlobalConfig(BaseConfig):
     DB_MAX_OVERFLOW: int = Field(50)
     DB_POOL_TIMEOUT: int = Field(1)  # timeout in seconds for obtain a connection from pool
     DB_LOGGING: bool = Field(False)
+    ONESIGNAL_USER_AUTH_KEY: Optional[str]
+    ONESIGNAL_REST_API_KEY: Optional[str]
+    ONESIGNAL_APP_ID: Optional[str]
 
     class Config:
         extra = Extra.allow
