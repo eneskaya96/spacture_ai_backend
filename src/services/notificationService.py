@@ -19,7 +19,7 @@ class NotificationService(BaseService):
     def __init__(self, uow: Optional[UnitOfWork] = None) -> None:
         super().__init__(uow)
 
-    def save_token(self, save_token_request_dto: SaveTokenRequestDto) -> Notification:
+    def save_token(self, save_token_request_dto: SaveTokenRequestDto) -> Optional[Notification]:
         """
         Create a new token
         :param save_token_request_dto
@@ -28,7 +28,7 @@ class NotificationService(BaseService):
         notification_token = self.uow.notification.get_token(save_token_request_dto.token)
         if notification_token:
             self.logger.error(f"Token already exist in DB token: {save_token_request_dto.token}")
-            return
+            return None
 
         new_notification_token = Notification.create_notification_token(
             company_id=save_token_request_dto.company_id,

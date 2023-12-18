@@ -16,8 +16,12 @@ def initialize_notification_routes(app):
 
             notification_service = NotificationService()
             notification_token = notification_service.save_token(save_token_request_dto)
-            notification_response_dto = NotificationResponseDto.create(notification_token)
-            return BaseResponse.create_response(message='Notification token is created', data=notification_response_dto)
+            if notification_token:
+                notification_response_dto = NotificationResponseDto.create(notification_token)
+                return BaseResponse.create_response(message='Notification token is created',
+                                                    data=notification_response_dto)
+            else:
+                return BaseResponse.create_response(message='Notification token already exist')
 
         @app.route('/api/send-notification/<string:company_id>', methods=['POST'])
         def send_notification(company_id: str):
