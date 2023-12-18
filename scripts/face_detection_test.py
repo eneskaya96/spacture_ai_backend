@@ -23,7 +23,6 @@ def add_face_detection(company_id, image_url):
     return response.json()
 
 
-
 def notify_face_detected(face_detection_id):
     url = f"{base_url}/api/face_detection_notify"
     data = {
