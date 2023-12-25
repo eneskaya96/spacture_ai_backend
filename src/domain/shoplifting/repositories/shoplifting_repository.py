@@ -11,5 +11,5 @@ class ShopliftingRepository(BaseRepository[Shoplifting], abc.ABC):
         pass
 
     @abc.abstractmethod
-    def get_all_shoplifting_by_company_id(self, company_id: str) -> Optional[List[Dict]]:
+    def get_all_shoplifting_by_company_id(self, company_id: str, limit: int, offset: int) -> Optional[List[Dict]]:
         pass
