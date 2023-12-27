@@ -7,6 +7,7 @@ from src.api.models.dto.face_detection.face_detection_response_dto import FaceDe
 
 from src.api.models.dto.face_detection.face_detections_response_dto import FaceDetectionsResponseDto
 from src.api.models.dto.face_detection.notify_face_detection_request_dto import NotifyFaceDetectionRequestDto
+from src.api.models.dto.pagination_request_dto import PaginationRequestDto
 from src.services.face_detection_service import FaceDetectionService
 
 
@@ -35,9 +36,22 @@ def initialize_face_detection_routes(app, socketio):
 
     @app.route('/api/face_detection/<string:company_id>', methods=['GET'])
     def get_all_face_detection(company_id: str):
+        request_data = request.get_json(silent=True)
+        default_limit = 10
+        default_offset = 0
+
+        if request_data is None:
+            limit = default_limit
+            offset = default_offset
+        else:
+            pagination_request_dto = PaginationRequestDto.parse_obj(request_data)
+            limit = pagination_request_dto.limit if pagination_request_dto.limit is not None else default_limit
+            offset = pagination_request_dto.offset if pagination_request_dto.offset is not None else default_offset
 
         face_detection_service = FaceDetectionService(socketio)
 
-        face_detections = face_detection_service.get_face_detections(company_id)
+        face_detections = face_detection_service.get_face_detections(company_id,
+                                                                     limit,
+                                                                     offset)
         face_detection_response_dto = FaceDetectionsResponseDto.create(face_detections)
         return BaseResponse.create_response(message='Face detections are get', data=face_detection_response_dto)

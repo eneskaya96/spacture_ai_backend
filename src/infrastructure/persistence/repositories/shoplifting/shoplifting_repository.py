@@ -1,5 +1,7 @@
 from typing import Optional, List, Dict
 
+from sqlalchemy import desc
+
 from src.domain.shoplifting.entities.shoplifting import Shoplifting as DomainShoplifting
 from src.domain.shoplifting.repositories.shoplifting_repository import ShopliftingRepository as ShopliftingDomianRepository
 from src.infrastructure.entities.shoplifting.shoplifting import Shoplifting
@@ -18,7 +20,7 @@ class ShopliftingRepository(BaseGenericRepository[DomainShoplifting], Shopliftin
                 .order_by(Shoplifting.created_date.desc())
                 .first())
 
-    def get_all_shoplifting_by_company_id(self, company_id: str) -> Optional[List[Dict]]:
+    def get_all_shoplifting_by_company_id(self, company_id: str, limit: int, offset: int) -> Optional[List[Dict]]:
         res = self.session.query(
             Shoplifting.company_id,
             Shoplifting.face_detection_id,
@@ -28,6 +30,9 @@ class ShopliftingRepository(BaseGenericRepository[DomainShoplifting], Shopliftin
             .join(FaceDetection) \
             .filter(Shoplifting.company_id == company_id) \
             .filter(Shoplifting.face_detection_id == FaceDetection.id) \
+            .order_by(desc(Shoplifting.created_date))\
+            .limit(limit) \
+            .offset(offset) \
             .all()
         result_dicts = [
             {

@@ -52,9 +52,11 @@ class FaceDetectionService(BaseService):
         self.logger.info(f'Face detection {face_detection_request_dto.image_url} is created')
         return new_face_detection
 
-    def get_face_detections(self, company_id: str) -> Optional[List[FaceDetection]]:
+    def get_face_detections(self, company_id: str, limit: int, offset: int) -> Optional[List[FaceDetection]]:
         """
         Get all face detections for a company
         :param company_id
+        :param offset:
+        :param limit:
         """
-        return self.uow.face_detection.get_face_detection_by_company_id(company_id)
+        return self.uow.face_detection.get_face_detection_by_company_id(company_id, limit, offset)

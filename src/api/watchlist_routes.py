@@ -2,6 +2,7 @@
 from flask import request
 
 from src.api.models.base_response import BaseResponse
+from src.api.models.dto.pagination_request_dto import PaginationRequestDto
 from src.api.models.dto.watchlist.watchlist_detected_request_dto import WatchlistDetectedRequestDto
 from src.api.models.dto.watchlist.watchlist_face_detection_list_response_dto import \
     WatchlistFaceDetectionListResponseDto
@@ -49,9 +50,23 @@ def initialize_watchlist_routes(app, socketio):
 
     @app.route('/api/watchlist_face_detection/<string:company_id>', methods=['GET'])
     def get_all_watchlist_face_detection(company_id: str):
+        request_data = request.get_json(silent=True)
+        default_limit = 10
+        default_offset = 0
+
+        if request_data is None:
+            limit = default_limit
+            offset = default_offset
+        else:
+            pagination_request_dto = PaginationRequestDto.parse_obj(request_data)
+            limit = pagination_request_dto.limit if pagination_request_dto.limit is not None else default_limit
+            offset = pagination_request_dto.offset if pagination_request_dto.offset is not None else default_offset
+
         watchlist_service = WatchlistService(socketio)
 
-        watchlist_face_detection_list = watchlist_service.get_all_watchlist_face_detections(company_id)
+        watchlist_face_detection_list = watchlist_service.get_all_watchlist_face_detections(company_id,
+                                                                     limit,
+                                                                     offset)
         watchlist_face_detection_list_response_dto = WatchlistFaceDetectionListResponseDto.create(watchlist_face_detection_list)
         return BaseResponse.create_response(message='Watchlist face detections are get', data=watchlist_face_detection_list_response_dto)
 

@@ -55,11 +55,11 @@ class ShopliftingService(BaseService):
         shoplifting = self.uow.shoplifting.get_by_face_detection_id(face_detection_id)
         return shoplifting
 
-    def get_all_shoplifting(self, company_id: str) -> Optional[List[Shoplifting]]:
+    def get_all_shoplifting(self, company_id: str, limit: int, offset: int) -> Optional[List[Shoplifting]]:
         """
         Get all face detections for a company
         :param company_id
         """
 
-        return self.uow.shoplifting.get_all_shoplifting_by_company_id(company_id)
+        return self.uow.shoplifting.get_all_shoplifting_by_company_id(company_id, limit, offset)
 

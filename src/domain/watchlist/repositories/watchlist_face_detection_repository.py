@@ -7,5 +7,5 @@ from src.domain.watchlist.entities.watchlistFaceDetection import WatchlistFaceDe
 
 class WatchlistFaceDetectionRepository(BaseRepository[WatchlistFaceDetection], abc.ABC):
     @abc.abstractmethod
-    def get_watchlist_face_detections(self, watchlist_ids: List[str]) -> list[Type[WatchlistFaceDetection]]:
+    def get_watchlist_face_detections(self, watchlist_ids: List[str], limit, offset) -> list[Type[WatchlistFaceDetection]]:
         pass

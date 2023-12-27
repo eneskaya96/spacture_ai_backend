@@ -113,7 +113,7 @@ class WatchlistService(BaseService):
 
         return self.uow.watchlist.get_watchlist_by_company_id(company_id)
 
-    def get_all_watchlist_face_detections(self, company_id: str) -> list[dict]:
+    def get_all_watchlist_face_detections(self, company_id: str, limit: int, offset: int) -> list[dict]:
         """
         Get all watchlist for a company
         :param company_id
@@ -122,7 +122,7 @@ class WatchlistService(BaseService):
         list_watchlist_ids = [item['id'] for item in list_watchlist]
 
         list_of_watchlist_face_detection \
-            = self.uow.watchlist_face_detection.get_watchlist_face_detections(list_watchlist_ids)
+            = self.uow.watchlist_face_detection.get_watchlist_face_detections(list_watchlist_ids, limit, offset)
 
         detected_persons = []
 
