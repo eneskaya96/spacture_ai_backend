@@ -23,10 +23,10 @@ def initialize_notification_routes(app):
             else:
                 return BaseResponse.create_response(message='Notification token already exist')
 
-        @app.route('/api/send-notification/<string:company_id>', methods=['POST'])
-        def send_notification(company_id: str):
+        @app.route('/api/send-notification/<string:company_id>/<string:title>/<string:message>', methods=['POST'])
+        def send_notification(company_id: str, title, message):
             notification_service = NotificationService()
-            is_sent = notification_service.send_notification(company_id)
+            is_sent = notification_service.send_notification(company_id, title, message)
 
             if is_sent:
                 return BaseResponse.create_response(message='Notification successfully sent')

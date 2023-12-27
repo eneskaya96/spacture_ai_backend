@@ -41,7 +41,7 @@ class NotificationService(BaseService):
 
         return new_notification_token
 
-    def send_notification(self, company_id: str) -> bool:
+    def send_notification(self, company_id: str, title: str, message: str) -> bool:
         config = ConfigManager.config
         if not config.ONESIGNAL_REST_API_KEY:
             self.logger.error(f"ONESIGNAL_REST_API_KEY not found")
@@ -52,9 +52,6 @@ class NotificationService(BaseService):
         if len(notification_tokens) <= 0:
             self.logger.info(f"There is no token for this company: {company_id} on DB")
             return False
-
-        title = "SUSPICIOUS ALERT"
-        message = "Suspicious behaviour detected"
 
         include_player_ids =[notification_token.token for notification_token in notification_tokens]
         post_body = {
