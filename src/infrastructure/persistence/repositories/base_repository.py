@@ -4,7 +4,7 @@ import logging
 from datetime import datetime
 from typing import List, TypeVar, Type, Generic, Optional, Union
 
-from sqlalchemy import func, desc
+from sqlalchemy import func, desc, text
 from sqlalchemy.orm import Session, Query
 from sqlalchemy.sql import operators
 
@@ -113,7 +113,7 @@ class BaseGenericRepository(BaseRepository, BaseDomainRepository[EType], Generic
         return [self.domain_type.from_orm(entity) for entity in entities]
 
     def all(self) -> List[EType]:
-        entities = self.query.all()
+        entities = self.query.order_by(text("id desc")).all()
         return [self.domain_type.from_orm(entity) for entity in entities]
 
     def last(self) -> Optional[EType]:
