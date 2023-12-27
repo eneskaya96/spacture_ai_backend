@@ -101,7 +101,10 @@ class WatchlistService(BaseService):
             "created_date": new_watchlist_face_detection.created_date.strftime("%Y-%m-%d %H:%M:%S"),
             "thread": True
         }
-        self.detected_face_service.notify_detected_face(detected_person, company_id=old_face_detection.company_id)
+        self.detected_face_service.notify_detected_face(detected_person,
+                                                        company_id=old_face_detection.company_id,
+                                                        title="Suspicious Behavior",
+                                                        message="Watchlist Detected")
 
         return detected_person
 

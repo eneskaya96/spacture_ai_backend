@@ -1,30 +1,20 @@
 import logging
 
 from flask import Flask
-from flask_apscheduler import APScheduler
 from flask_cors import CORS
 from flask_socketio import SocketIO
 
-import gevent.monkey
-
 from src.configs.config_manager import ConfigManager
-
-gevent.monkey.patch_all(ssl=False)
 
 
 def create_app():
+
+    import gevent.monkey
+    gevent.monkey.patch_all(ssl=False)
+
     app = Flask(__name__)
-    scheduler = APScheduler()
     CORS(app, resources={r"*": {"origins": "*"}})
     socketio = SocketIO(app, cors_allowed_origins="*", async_mode='gevent')
-
-    # flask async job
-    """
-    detected_images_service = DetectedImagesService(socketio)
-    scheduler.add_job(id='send_new_detection_task', func=detected_images_service.send_detected_images, trigger='interval',
-                      seconds=30)
-    scheduler.start()
-    """
 
     config = ConfigManager.init_config()
     app.config.from_object(config)
@@ -41,12 +31,7 @@ def create_app():
     return app
 
 
-if __name__ == '__main__':
-    app = create_app()
-    from gevent.pywsgi import WSGIServer
-    from geventwebsocket.handler import WebSocketHandler
+logger = logging.getLogger(__name__)
+logger.info(f'Spacture AI Backend is Alive')
 
-    logger = logging.getLogger(__name__)
-    logger.info(f'Spacture AI Backend is Alive')
-    http_server = WSGIServer((ConfigManager.config.IP, 5000), app, handler_class=WebSocketHandler)
-    http_server.serve_forever()
+app = create_app()

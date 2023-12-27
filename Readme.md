@@ -29,3 +29,23 @@ If you create empty revision file, create with this command:
 If you want to downgrade to a specific revision of a migration:
 
     flask db downgrade <revision_id>
+
+
+## Gunicorn starter
+
+    sudo nano /etc/systemd/system/gunicorn.service
+
+copy the gunicorn.service here 
+
+    sudo systemctl start gunicorn.service
+
+    sudo systemctl enable gunicorn.service
+
+
+    sudo systemctl status gunicorn.service
+
+
+    sudo systemctl daemon-reload
+    sudo systemctl restart gunicorn.service
+
+

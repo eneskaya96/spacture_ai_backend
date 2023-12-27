@@ -15,7 +15,7 @@ class DetectedFaceService:
     def get_images_directory(self):
         return self.image_dir
 
-    def notify_detected_face(self, detected_person: Dict, company_id: str):
+    def notify_detected_face(self, detected_person: Dict, company_id: str, title: str = "", message: str = ""):
 
         self.socketio.emit('new_detection', {'data': [detected_person]}, namespace='/')
 
@@ -23,5 +23,5 @@ class DetectedFaceService:
 
         if detected_person["thread"]:
             notification_service = NotificationService()
-            notification_service.send_notification(company_id)
+            notification_service.send_notification(company_id, title, message)
             self.logger.info(f'Notification send to mobile app: {detected_person} ')
