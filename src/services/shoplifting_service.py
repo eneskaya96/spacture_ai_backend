@@ -42,7 +42,10 @@ class ShopliftingService(BaseService):
             "thread": True
         }
 
-        self.detected_face_service.notify_detected_face(detected_person, face_detection.company_id)
+        self.detected_face_service.notify_detected_face(detected_person,
+                                                        face_detection.company_id,
+                                                        title="Suspicious Behavior",
+                                                        message="Shoplifting Detected")
 
         return shoplifting
 
